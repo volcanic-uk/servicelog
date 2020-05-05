@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveResource
   class Base
     cattr_accessor :static_headers

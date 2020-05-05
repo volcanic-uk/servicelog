@@ -2,7 +2,7 @@
 
 module Servicelog
   class Configuration
-    ADAPTERS_PATH = 'servicelog/adapters'.freeze
+    ADAPTERS_PATH = 'servicelog/adapters'
 
     attr_accessor :adapters, :x_correlation_id
 

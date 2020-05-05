@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'servicelog/version'
 require 'servicelog/configuration'
 require 'servicelog/generators/install_generator'
@@ -5,7 +7,7 @@ require 'servicelog/railtie' if defined?(Rails)
 require 'servicelog/middleware'
 
 module Servicelog
-  extend self
+  module_function
 
   delegate :adapters, :x_correlation_id, to: :configuration
 
