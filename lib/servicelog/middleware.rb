@@ -16,7 +16,7 @@ module Servicelog
     private
 
     def headers(env)
-      if Servicelog.correlation_id
+      if Servicelog.x_correlation_id
         { 'X-Correlation-Id' => env['action_dispatch.request_id'] }
       else
         { 'X-Request-Id' => env['action_dispatch.request_id'] }

@@ -14,6 +14,12 @@ then execute:
 
     $ bundle install
 
+Next, you need to run the generator:
+
+    $ rails generate servicelog:install
+
+The generator will install an initializer which describes Servicelog's configuration options.
+
 ## Usage
 
 TODO
