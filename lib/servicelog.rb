@@ -3,8 +3,6 @@ require 'servicelog/configuration'
 require 'servicelog/generators/install_generator'
 require 'servicelog/railtie' if defined?(Rails)
 require 'servicelog/middleware'
-require 'servicelog/adapters/active_resource'
-require 'servicelog/adapters/httparty'
 
 module Servicelog
   extend self
@@ -16,7 +14,7 @@ module Servicelog
   end
 
   def configure
-    yield(configuration)
+    yield(configuration) && configuration.require_adapters
   end
 
   def store
