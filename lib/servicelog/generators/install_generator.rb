@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails/generators/base'
+
 module Servicelog
   module Generators
     class InstallGenerator < Rails::Generators::Base
