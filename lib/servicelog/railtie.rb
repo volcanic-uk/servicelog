@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 
 module Servicelog
-  # The Railtie triggering a setup from RAILs to make it configurable
   class Railtie < ::Rails::Railtie
     initializer 'servicelog.insert_middleware' do |app|
       app.middleware.insert_after ActionDispatch::RequestId, Servicelog::Middleware
+    end
+
+    initializer 'servicelog.configure_log_tags' do |app|
+      if !app.config.log_tags.nil?
+        app.configure do
+          config.log_tags = [
+            ->(request) { request.headers['X-Correlation-Id'] if Servicelog.x_correlation_id }
+          ] + app.config.log_tags
+        end
+      end
     end
   end
 end
