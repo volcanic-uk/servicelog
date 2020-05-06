@@ -4,11 +4,10 @@ module Servicelog
   class Configuration
     ADAPTERS_PATH = 'servicelog/adapters'
 
-    attr_accessor :adapters, :x_correlation_id
+    attr_accessor :adapters
 
     def initialize
       @adapters = []
-      @x_correlation_id = false
     end
 
     def require_adapters

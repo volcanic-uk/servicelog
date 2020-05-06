@@ -4,12 +4,11 @@ require 'servicelog/version'
 require 'servicelog/configuration'
 require 'servicelog/generators/install_generator'
 require 'servicelog/railtie' if defined?(Rails)
-require 'servicelog/middleware'
+require 'servicelog/middlewares/store_headers'
+require 'servicelog/middlewares/request_id'
 
 module Servicelog
   module_function
-
-  delegate :adapters, :x_correlation_id, to: :configuration
 
   def configuration
     @configuration ||= Configuration.new
@@ -19,11 +18,15 @@ module Servicelog
     yield(configuration) && configuration.require_adapters
   end
 
-  def store
+  def headers
     RequestStore[:headers] ||= {}
   end
 
-  def store=(store)
+  def headers=(store)
     RequestStore[:headers] = store
+  end
+
+  def adapters
+    configuration.adapters
   end
 end

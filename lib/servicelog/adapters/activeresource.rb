@@ -6,7 +6,7 @@ module ActiveResource
     self.static_headers = headers
 
     def self.headers
-      static_headers.clone.merge(Servicelog.store)
+      static_headers.clone.merge(Servicelog.headers)
     end
   end
 end

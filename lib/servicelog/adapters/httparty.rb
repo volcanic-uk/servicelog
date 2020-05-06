@@ -4,7 +4,7 @@ module HTTParty
   module ClassMethods
     def headers(hash = nil)
       default_headers = default_options[:headers] || {}
-      default_headers.merge!(Servicelog.store)
+      default_headers.merge!(Servicelog.headers)
 
       if hash
         unless hash.respond_to?(:to_hash)
