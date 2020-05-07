@@ -2,8 +2,8 @@
 
 require 'servicelog/version'
 require 'servicelog/configuration'
-require 'servicelog/generators/install_generator' if defined?(Rails)
-require 'servicelog/railtie' if defined?(Rails)
+require 'servicelog/generators/install_generator'
+require 'servicelog/railtie'
 require 'servicelog/middlewares/store_headers'
 require 'servicelog/middlewares/request_id'
 

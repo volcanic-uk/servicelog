@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['victor.mx14@gmail.com']
 
   spec.summary       = 'service logs'
-  spec.description   = 'service logs'
+  spec.description   = 'service logs for Rails 5+'
   spec.homepage      = 'https://github.com/victorperez/servicelog'
   spec.license       = 'MIT'
 
@@ -29,10 +29,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'rails', '~> 5.0.0', '>= 5.0.0'
   spec.add_dependency 'request_store', '>= 1.4.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '>= 12.3.3'
-  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'rubocop', '~> 0.82.0'
 end

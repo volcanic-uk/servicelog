@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails/railtie'
+
 module Servicelog
   class Railtie < ::Rails::Railtie
     initializer 'servicelog.insert_middlewares' do |app|
