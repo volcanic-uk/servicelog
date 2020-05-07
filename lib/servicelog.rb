@@ -2,7 +2,7 @@
 
 require 'servicelog/version'
 require 'servicelog/configuration'
-require 'servicelog/generators/install_generator'
+require 'generators/servicelog/install_generator'
 require 'servicelog/railtie'
 require 'servicelog/middlewares/store_headers'
 require 'servicelog/middlewares/request_id'
@@ -12,6 +12,10 @@ module Servicelog
 
   def configuration
     @configuration ||= Configuration.new
+  end
+
+  def configuration=(config)
+    @configuration = config
   end
 
   def configure
