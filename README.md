@@ -1,6 +1,10 @@
 # Servicelog
 
-TODO
+If you have a microservice infrastructure and services are growing everywhere you will release challenges as soon as more service are interconnected and you need to figure out problems.
+
+For this issue the `X-Request-Id` HTTP header was introduced. In Rails the `ActionDispatch::RequestId` creates a unique ID for each request if not already defined by the `X-Request-Id` header. Unfortunatelly if your service connects to another service the passing over of this unique id is not in the scope of the `ActionDispatch::RequestId` middleware.
+
+For that issue Servicelog helps you to use the same `X-Request-Id` for multiple requests.
 
 ## Installation
 
@@ -22,7 +26,29 @@ The generator will install an initializer which describes Servicelog's configura
 
 ## Usage
 
-TODO
+By default Servicelog introduces two new middlewares and deletes the `ActionDispatch::RequestId`. The middlewares introduced by Servicelog are:
+
+- `Servicelog::StoreHeaders` to store the `X-Request-Id` header and make it globally available in your application through `Servicelog.headers`.
+- `Servicelog::RequestId` which is similar to `ActionDispatch::RequestId` but it takes the incoming `X-Request-Id` and append a new ID to it, this allows to log a unique request on the back server but also see the calling server ID.
+
+Catching and creating a unique request ID is a great, but to really take advantage of the correlation in a service based architecture you'll need to pass the `X-Request-Id` on each request to the next service. It is up to you to ensure that all the requests in your service send the correct `X-Request-Id` to the next service, although Servilog provides a common list of adapters to override the base class and ensure the `X-Request-Id` is sent.
+
+## Adapters
+
+The `adapters` setting allows you to specify which adapters you want to use to send the `X-Request-Id` in each request.
+
+By default the `adapters` setting is set to `[]` - You can change it in your initializer:
+
+```ruby
+Servicelog.configure do |config|
+  config.adapters = %i[activeresource httparty]
+end
+```
+
+Availabale adapters:
+
+- `activeresource` - https://github.com/rails/activeresource
+- `httparty` - https://github.com/jnunemaker/httparty
 
 ## Development
 
@@ -32,7 +58,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/victorperez/servicelog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/volcanic-uk/servicelog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
