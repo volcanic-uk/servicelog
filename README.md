@@ -31,7 +31,7 @@ By default Servicelog introduces two new middlewares and deletes the `ActionDisp
 - `Servicelog::StoreHeaders` to store the `X-Request-Id` header and make it globally available in your application through `Servicelog.headers`.
 - `Servicelog::RequestId` which is similar to `ActionDispatch::RequestId` but it takes the incoming `X-Request-Id` and append a new ID to it, this allows to log a unique request on the back server but also see the calling server ID.
 
-Catching and creating a unique request ID is a great, but to really take advantage of the correlation in a service based architecture you'll need to pass the `X-Request-Id` on each request to the next service. It is up to you to ensure that all the requests in your service send the correct `X-Request-Id` to the next service, although Servilog provides a common list of adapters to override the base class and ensure the `X-Request-Id` is sent.
+Catching and creating a unique request ID is great, but to really take advantage of the correlation in a service based architecture you'll need to pass the `X-Request-Id` on each request to the next service. It is up to you to ensure that all the requests in your service send the correct `X-Request-Id` to the next service, although Servicelog provides a common list of adapters to override the base class and ensure the `X-Request-Id` is sent.
 
 ## Adapters
 
@@ -66,4 +66,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Servicelog project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/victorperez/servicelog/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Servicelog project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/volcanic-uk/servicelog/blob/master/CODE_OF_CONDUCT.md).
