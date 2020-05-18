@@ -23,7 +23,8 @@ module Servicelog
 
     def make_request_id(request_id)
       if request_id.presence
-        [request_id.gsub(/[^\w\-@]/, ''), internal_request_id].join('.')[0..254]
+        sanitized_request_id = request_id.gsub(/[^\w\-@]/, '')
+        (sanitized_request_id.split('.').last(6) + [internal_request_id]).join('.')[0..254]
       else
         internal_request_id
       end

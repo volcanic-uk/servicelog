@@ -29,7 +29,7 @@ The generator will install an initializer which describes Servicelog's configura
 By default Servicelog introduces two new middlewares and deletes the `ActionDispatch::RequestId`. The middlewares introduced by Servicelog are:
 
 - `Servicelog::StoreHeaders` to store the `X-Request-Id` header and make it globally available in your application through `Servicelog.headers`.
-- `Servicelog::RequestId` which is similar to `ActionDispatch::RequestId` but it takes the incoming `X-Request-Id` and append a new ID to it, this allows to log a unique request on the back server but also see the calling server ID.
+- `Servicelog::RequestId` which is similar to `ActionDispatch::RequestId` but it takes the incoming `X-Request-Id` (up to 6 callers) and append a new ID to it, this allows to log a unique request on the back server but also see the calling server ID.
 
 Catching and creating a unique request ID is great, but to really take advantage of the correlation in a service based architecture you'll need to pass the `X-Request-Id` on each request to the next service. It is up to you to ensure that all the requests in your service send the correct `X-Request-Id` to the next service, although Servicelog provides a common list of adapters to override the base class and ensure the `X-Request-Id` is sent.
 
@@ -52,7 +52,7 @@ Availabale adapters:
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
