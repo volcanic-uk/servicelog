@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 module ActiveResource
-  class Base
-    cattr_accessor :static_headers
-    self.static_headers = headers
+  class Connection
+    alias original_build_request_headers build_request_headers
 
-    def self.headers
-      static_headers.clone.merge(Servicelog.headers)
+    def build_request_headers(headers, http_method, uri)
+      original_build_request_headers(headers, http_method, uri).merge(Servicelog.headers)
     end
   end
 end

@@ -2,6 +2,7 @@
 
 require 'test_helper'
 require 'activeresource'
+require 'httparty'
 
 class ServicelogTest < ActiveSupport::TestCase
   def setup
