@@ -11,7 +11,7 @@ For that issue Servicelog helps you to use the same `X-Request-Id` for multiple 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'servicelog'
+gem 'servicelog', git: 'https://github.com/volcanic-uk/servicelog.git', tag: 'v0.0.1'
 ```
 
 then execute:
