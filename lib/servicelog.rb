@@ -5,6 +5,7 @@ require 'servicelog/configuration'
 require 'generators/servicelog/install_generator'
 require 'servicelog/railtie'
 require 'servicelog/middlewares/store_headers'
+require 'servicelog/middlewares/shoryuken_store_headers'
 require 'servicelog/middlewares/request_id'
 
 module Servicelog
