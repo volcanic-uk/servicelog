@@ -29,6 +29,7 @@ The generator will install an initializer which describes Servicelog's configura
 By default Servicelog introduces two new middlewares and deletes the `ActionDispatch::RequestId`. The middlewares introduced by Servicelog are:
 
 - `Servicelog::StoreHeaders` to store the `X-Request-Id` header and make it globally available in your application through `Servicelog.headers`.
+- `Servicelog::ShoryukenStoreHeaders` to store the ID of background jobs into the `X-Request-Id` header requests from within those jobs and make it globally available in your application through `Servicelog.headers`.
 - `Servicelog::RequestId` which is similar to `ActionDispatch::RequestId` but it takes the incoming `X-Request-Id` (up to 6 callers) and append a new ID to it, this allows to log a unique request on the back server but also see the calling server ID.
 
 Catching and creating a unique request ID is great, but to really take advantage of the correlation in a service based architecture you'll need to pass the `X-Request-Id` on each request to the next service. It is up to you to ensure that all the requests in your service send the correct `X-Request-Id` to the next service, although Servicelog provides a common list of adapters to override the base class and ensure the `X-Request-Id` is sent.
@@ -49,6 +50,27 @@ Availabale adapters:
 
 - `activeresource` - https://github.com/rails/activeresource
 - `httparty` - https://github.com/jnunemaker/httparty
+
+## Registering Shoryuken middleware
+The `ShoryukenStoreHeaders` middleware is executed whenever a background job is started, then it grabs the message ID and adds it to the `X-Request-Id` header. This way the job ID is sent with each HTTP request made from inside the job.
+
+It works for both `Active Job` and `Shoryuken::Worker`.
+
+To register to Rails:
+
+Edit/Create `config/initializers/00_shoryuken.rb`:
+
+```ruby
+Shoryuken.configure_server do |config|
+ { other code... }
+
+  config.server_middleware do |chain|
+    chain.add Servicelog::ShoryukenStoreHeaders
+  end
+end
+```
+
+Shoryuken middleware documentation [link here.](https://github.com/phstc/shoryuken/wiki/Middleware "link here")
 
 ## Development
 
