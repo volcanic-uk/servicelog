@@ -45,6 +45,15 @@ Servicelog.configure do |config|
   config.adapters = %i[activeresource httparty]
 end
 ```
+## Prefix request
+
+You can prefix you service request using the `prefix` configuration, by default the `prefix` setting is set to `nil` - You can change it in your initializer:
+
+```ruby
+Servicelog.configure do |config|
+  config.prefix = :name
+end
+```
 
 Availabale adapters:
 

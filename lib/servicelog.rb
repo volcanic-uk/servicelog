@@ -34,4 +34,8 @@ module Servicelog
   def adapters
     configuration.adapters
   end
+
+  def prefix
+    configuration.prefix
+  end
 end

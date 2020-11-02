@@ -31,7 +31,11 @@ module Servicelog
     end
 
     def internal_request_id
-      SecureRandom.uuid
+      if Servicelog.prefix.present?
+        [Servicelog.prefix, SecureRandom.uuid].join('-')[0..35]
+      else
+        SecureRandom.uuid
+      end
     end
   end
 end
