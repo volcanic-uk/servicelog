@@ -4,7 +4,7 @@ module Servicelog
   class Configuration
     ADAPTERS_PATH = 'servicelog/adapters'
 
-    attr_accessor :adapters
+    attr_accessor :adapters, :prefix
 
     def initialize
       @adapters = []
