@@ -45,20 +45,21 @@ Servicelog.configure do |config|
   config.adapters = %i[activeresource httparty]
 end
 ```
+
+Availabale adapters:
+
+- `activeresource` - https://github.com/rails/activeresource
+- `httparty` - https://github.com/jnunemaker/httparty
+
 ## Prefix request
 
-You can prefix you service request using the `prefix` configuration, by default the `prefix` setting is set to `nil` - You can change it in your initializer:
+You can prefix a request using the `prefix` configuration, by default the `prefix` setting is set to `nil` - You can change it in your initializer:
 
 ```ruby
 Servicelog.configure do |config|
   config.prefix = :name
 end
 ```
-
-Availabale adapters:
-
-- `activeresource` - https://github.com/rails/activeresource
-- `httparty` - https://github.com/jnunemaker/httparty
 
 ## Registering Shoryuken middleware
 The `ShoryukenStoreHeaders` middleware is executed whenever a background job is started, then it grabs the message ID and adds it to the `X-Request-Id` header. This way the job ID is sent with each HTTP request made from inside the job.
