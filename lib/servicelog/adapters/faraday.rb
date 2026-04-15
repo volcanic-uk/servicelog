@@ -20,7 +20,7 @@ module Faraday
       if headers
         headers.replace hash
       else
-        super(hash)
+        member_set(:headers, hash)
       end
     end
   end
