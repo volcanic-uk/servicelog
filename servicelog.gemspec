@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '>= 5.0.0'
   spec.add_dependency 'request_store', '>= 1.4.0'
 
+  spec.add_development_dependency 'faraday', '>= 1.0', '< 3.0'
   spec.add_development_dependency 'activeresource', '>= 5.0.0'
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'httparty', '>= 0.16.2'

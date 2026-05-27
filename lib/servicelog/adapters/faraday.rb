@@ -4,17 +4,17 @@
 # If it isn't loaded first, it will overwrite this monkeypatch
 require 'faraday'
 
-module Faraday
-  class Connection
-    alias original_initialize initialize
+FARADAY_MAJOR = Gem::Version.new(Faraday::VERSION).segments.first
 
+module Servicelog
+  module FaradayConnectionPatch
     def initialize(url = nil, options = nil, &block)
-      original_initialize(url, options, &block)
+      super
       @headers.update(Servicelog.headers)
     end
   end
 
-  class Request
+  module FaradayRequestHeadersPatchV1
     def headers=(hash)
       hash.update(Servicelog.headers)
       if headers
@@ -24,4 +24,26 @@ module Faraday
       end
     end
   end
+
+  module FaradayRequestHeadersPatchV2
+    def headers=(hash)
+      hash.update(Servicelog.headers)
+      if headers
+        headers.replace hash
+      else
+        member_set(:headers, hash)
+      end
+    end
+  end
+end
+
+Faraday::Connection.prepend(Servicelog::FaradayConnectionPatch)
+
+if FARADAY_MAJOR >= 2
+  Faraday::Request.class_eval do
+    remove_method :headers= if method_defined?(:headers=) || private_method_defined?(:headers=)
+  end
+  Faraday::Request.prepend(Servicelog::FaradayRequestHeadersPatchV2)
+else
+  Faraday::Request.prepend(Servicelog::FaradayRequestHeadersPatchV1)
 end
