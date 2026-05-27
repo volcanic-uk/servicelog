@@ -4,9 +4,9 @@
 # If it isn't loaded first, it will overwrite this monkeypatch
 require 'faraday'
 
-FARADAY_MAJOR = Gem::Version.new(Faraday::VERSION).segments.first
-
 module Servicelog
+  FARADAY_MAJOR = Gem::Version.new(Faraday::VERSION).segments.first
+
   module FaradayConnectionPatch
     def initialize(url = nil, options = nil, &block)
       super
@@ -14,24 +14,15 @@ module Servicelog
     end
   end
 
-  module FaradayRequestHeadersPatchV1
+  module FaradayRequestHeadersPatch
     def headers=(hash)
       hash.update(Servicelog.headers)
       if headers
         headers.replace hash
+      elsif Servicelog::FARADAY_MAJOR >= 2
+        member_set(:headers, hash)
       else
         super(hash)
-      end
-    end
-  end
-
-  module FaradayRequestHeadersPatchV2
-    def headers=(hash)
-      hash.update(Servicelog.headers)
-      if headers
-        headers.replace hash
-      else
-        member_set(:headers, hash)
       end
     end
   end
@@ -39,11 +30,7 @@ end
 
 Faraday::Connection.prepend(Servicelog::FaradayConnectionPatch)
 
-if FARADAY_MAJOR >= 2
-  Faraday::Request.class_eval do
-    remove_method :headers= if method_defined?(:headers=) || private_method_defined?(:headers=)
-  end
-  Faraday::Request.prepend(Servicelog::FaradayRequestHeadersPatchV2)
-else
-  Faraday::Request.prepend(Servicelog::FaradayRequestHeadersPatchV1)
+Faraday::Request.class_eval do
+  remove_method :headers= if method_defined?(:headers=) || private_method_defined?(:headers=)
 end
+Faraday::Request.prepend(Servicelog::FaradayRequestHeadersPatch)
