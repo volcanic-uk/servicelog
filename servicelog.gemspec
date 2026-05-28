@@ -28,10 +28,12 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.required_ruby_version = '>= 3.3.0'
 
   spec.add_dependency 'rails', '>= 5.0.0'
   spec.add_dependency 'request_store', '>= 1.4.0'
 
+  spec.add_development_dependency 'faraday', '>= 1.0', '< 3.0'
   spec.add_development_dependency 'activeresource', '>= 5.0.0'
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'httparty', '>= 0.16.2'
